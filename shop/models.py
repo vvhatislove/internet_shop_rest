@@ -38,7 +38,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='products', on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, null=False)
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=100, db_index=True, unique=True)
     vendor_code = models.CharField(max_length=100, db_index=True, unique=True)

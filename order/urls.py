@@ -4,8 +4,12 @@ from order.api import OrderViewSet, CustomerViewSet
 
 urlpatterns = [
     path('customer-info/', CustomerViewSet.as_view(
-        {'get': 'get_customer_info',
-         'post': 'create'
-         }
+        {
+            'get': 'retrieve',
+            'post': 'create',
+            'put': 'update',
+            'patch': 'partial_update',
+            'delete': 'destroy',
+        }
     ))
 ]
