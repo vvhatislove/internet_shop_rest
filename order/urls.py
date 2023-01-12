@@ -11,5 +11,6 @@ urlpatterns = [
             'patch': 'partial_update',
             'delete': 'destroy',
         }
-    ))
+    )),
+    path('make-order/', OrderViewSet.as_view({'post': 'create'}))
 ]
