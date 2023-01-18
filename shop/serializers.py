@@ -21,5 +21,5 @@ class ProductReadSerializer(serializers.ModelSerializer):
 class ProductEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = '__all__'
+        exclude = ('created', 'updated')
         read_only_fields = ('slug',)

@@ -9,7 +9,7 @@ urlpatterns = [
             'post': 'create',
             'delete': 'cart_clear'
         })),
-    path('cart/<int:pk>/', CartViewSet.as_view(
+    path('cart/item-cart/<int:pk>/', CartViewSet.as_view(
         {
             'get': 'retrieve',
             'delete': 'destroy',

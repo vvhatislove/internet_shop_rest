@@ -7,23 +7,21 @@ urlpatterns = [
         'get': 'list'
     })),
     path('product/<int:pk>/', ProductViewSet.as_view({
-        'get': 'retrieve'
+        'get': 'retrieve',
+        'put': 'update',
+        'patch': 'partial_update',
+        'delete': 'destroy'
     })),
     path('product/', ProductViewSet.as_view({
         'post': 'create'
-    })),
-    path('product/delete/<int:pk>/', ProductViewSet.as_view({
-        'delete': 'destroy'
-    })),
-    path('product/update/<int:pk>/', ProductViewSet.as_view({
-        'put': 'update',
-        'patch': 'partial_update'
     })),
     path('categories/', CategoryViewSet.as_view({
         'get': 'list'
     })),
     path('category/<int:pk>/', CategoryViewSet.as_view({
-        'get': 'retrieve'
+        'get': 'retrieve',
+        'put': 'update',
+        'patch': 'partial_update'
     })),
     path('category/', CategoryViewSet.as_view({
         'post': 'create'
