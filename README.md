@@ -65,6 +65,9 @@ Allowed methods: GET, HEAD, OPTIONS
     + Description:
     
         Getting all existing categories
+        
+    + Authorization: Not required
+    + Permissions: Allow any
 
 `api/v1/shop/category/`
 
@@ -74,6 +77,9 @@ Allowed methods: POST, OPTIONS
     + Description:
     
         Creating a new product category
+        
+    + Authorization: Required
+    + Permissions: Admin Only
         
     + Data:
         + required:
@@ -88,10 +94,18 @@ Allowed methods: GET, PUT, PATCH, HEAD, OPTIONS
     + Description:
     
         Getting information about a category by ID
+        
+    + Authorization: Not required
+    + Permissions: Allow any  
+    
 2. PUT, PATCH:
     + Description:
     
         Full or partial change of information about the category
+        
+    + Authorization: Required
+    + Permissions: Admin only 
+    
     + Data:
     
         name: string
@@ -106,6 +120,13 @@ Allowed methods: GET, HEAD, OPTIONS
     + Description:
     
         Getting all existing products
+        
+    + Authorization: Not required
+    + Permissions: Allow any
+    
+    + Params:
+    
+    category_id: integer | filters products from the same category
 
 `api/v1/shop/product/`
 
@@ -115,6 +136,9 @@ Allowed methods: POST, OPTIONS
     + Description:
     
         Creating a new product
+        
+    + Authorization: Required
+    + Permissions: Admin only
         
     + Data:
         + required:
@@ -144,16 +168,25 @@ Allowed methods: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
     + Description:
     
         Getting information about a product by ID
+        
+    + Authorization: Not required
+    + Permissions: Allow any
 
 2. PUT, PATCH:
     + Description:
     
         Full or partial change of information about the product
         
+    + Authorization: Required
+    + Permissions: Admin only
+    
 3. DELETE:
     + Description:
     
         Removing a product by ID
+        
+    + Authorization: Required
+    + Permissions: Admin only
 
 ### Cart
 
@@ -165,11 +198,17 @@ Allowed methods: GET, POST, DELETE, HEAD, OPTIONS
     + Description:
     
         Returns all items added to the cart, the number of these items and their total cost
-
+    
+    + Authorization: Required
+    + Permissions: Owner
 2. POST
     + Description:
     
         Add a product to the cart and the quantity of this product
+        
+    + Authorization: Required
+    + Permissions: Owner
+    
     + Data:
         + required:
         
@@ -181,6 +220,9 @@ Allowed methods: GET, POST, DELETE, HEAD, OPTIONS
     + Description:
     
         Emptying the cart
+        
+    + Authorization: Required
+    + Permissions: Owner
 
 `api/v1/shop/checkout/cart/item-cart/{id}/`
 
@@ -190,16 +232,25 @@ Allowed methods: GET, PUT, PATCH, DELETE, HEAD, OPTIONS
     + Desciption:
     
         Returns information about the product in the cart, its quantity and total cost by ID of the product in the cart
-
+    
+    + Authorization: Required
+    + Permissions: Owner
+    
 2. PUT, PATCH:
     + Description:
     
         Changing the quantity of a product in the cart
-
+        
+    + Authorization: Required
+    + Permissions: Owner
+    
 3. DELETE:
     + Description:
     
         Removing a specific product from the cart
+    
+    + Authorization: Required
+    + Permissions: Owner
 
 ### Order creation
 
@@ -211,11 +262,18 @@ Allowed methods: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS
     + Description:
     
         Returns customer information
-
+    
+    + Authorization: Required
+    + Permissions: Owner
+    
 2. POST
     + Description:
     
         Adds customer information
+        
+    + Authorization: Required
+    + Permissions: Owner
+    
     + Data: 
         + required:
         
@@ -235,11 +293,17 @@ Allowed methods: GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS
     + Description:
     
         Full or partial change of information about the customer
+        
+    + Authorization: Required
+    + Permissions: Owner
 
 4. DELETE:
     + Description:
     
         Removing customer information
+        
+    + Authorization: Required
+    + Permissions: Owner
 
 `api/v1/shop/order/make-order/`
 
@@ -249,6 +313,10 @@ Allowed methods: POST, OPTIONS
     + Description:
     
     Creation of an order based on the products in the cart and customer information, after the order is created, the cart will be cleared
+    
+    + Authorization: Required
+    + Permissions: Owner
+    
     + Data:
     
         No data required
