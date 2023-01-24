@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from cart.models import Cart
 from order.models import Order, Customer
 from order.serializers import CustomerSerializer
-from order.utils import send_order_email
+from order.tasks import send_order_report_by_email
 
 
 class CustomerViewSet(viewsets.ModelViewSet):
@@ -84,7 +84,7 @@ class OrderViewSet(viewsets.ViewSet):
         try:
             customer = Customer.objects.get(user=request.user)
         except Customer.DoesNotExist:
-            return self._cart_is_empty()
+            return self._no_customer_data()
         # Create a list of products that are out of stock
         out_of_stock_products = []
         for item in items:
@@ -109,7 +109,8 @@ class OrderViewSet(viewsets.ViewSet):
             item.product.save()
         # Removing items from the cart
         items.delete()
-        send_order_email(order)
+        # Add a task to send an order report
+        send_order_report_by_email.delay(order.pk)
         return Response({
             'Order number': order.pk
         })
