@@ -20,10 +20,11 @@ def create_slug(string):
 
 class Category(models.Model):
     name = models.CharField(max_length=100, db_index=True, unique=True)
-    slug = models.CharField(max_length=100, db_index=True, unique=True)
+    slug = models.CharField(max_length=100, db_index=True, unique=True, blank=True)
 
     class Meta:
         ordering = ('name',)
+        verbose_name_plural = 'Categories'
 
     def __str__(self):
         return self.name
@@ -33,14 +34,11 @@ class Category(models.Model):
             self.slug = create_slug(self.name)
         super().save(*args, **kwargs)
 
-    # def get_absolute_url(self):
-    #     return reverse('category_view', args=[self.slug])
-
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, null=False)
     name = models.CharField(max_length=200, db_index=True)
-    slug = models.SlugField(max_length=100, db_index=True, unique=True)
+    slug = models.SlugField(max_length=100, db_index=True, unique=True, blank=True)
     vendor_code = models.CharField(max_length=100, db_index=True, unique=True)
     image = models.ImageField(upload_to=upload_image_to, blank=True)
     description = models.TextField(blank=True)
@@ -64,6 +62,3 @@ class Product(models.Model):
 
     class Meta:
         ordering = ('name',)
-
-    # def get_absolute_url(self):
-    #     return reverse('product_view', args=[self.category.slug, self.slug])

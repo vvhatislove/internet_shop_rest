@@ -21,7 +21,8 @@ urlpatterns = [
     path('category/<int:pk>/', CategoryViewSet.as_view({
         'get': 'retrieve',
         'put': 'update',
-        'patch': 'partial_update'
+        'patch': 'partial_update',
+        'delete': 'destroy'
     })),
     path('category/', CategoryViewSet.as_view({
         'post': 'create'
