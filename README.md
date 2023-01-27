@@ -7,51 +7,83 @@
 
 First you need to create a file ".env"
 In this file, you need to create 7 variables, namely:
-+ **DJANGO_SECRET_KEY**
++ **`DJANGO_SECRET_KEY`**
 
 Contains django secret key
-+ **DB_NAME**
++ **`DB_NAME`**
 
 Contains the name of the database
-+ **DB_USER**
++ **`DB_USER`**
 
 Contains the username for the database
-+ **DB_PASSWORD**
++ **`DB_PASSWORD`**
 
 Contains the database password
-+ **DB_HOST**
++ **`DB_HOST`**
 
-Contains the hostname where the database is located or "localhost" if the database is located locally
-+ **EMAIL_HOST_PASSWORD**
+Contains the hostname where the database is located (If you want to use docker compose the hostname should be "db")
++ **`REDIS_HOST`**
 
-Gmail password under which you want to send emails
-+ **EMAIL_HOST_USER**
+Contains the hostname where the redis is located (If you want to use docker compose the hostname should be "redis")
 
-Gmail account name
++ **`EMAIL_HOST_USER`**
 
+Contains the name of the gmail account from which emails are sent
+
++ **`EMAIL_HOST_PASSWORD`**
+
+Contains gmail password
 ### Setting up a virtual environment
 At the root of the project, create a virtual environment using the command:
-
-`python3 -m venv venv`
-
+```shell
+python3 -m venv venv
+```
 Activate it:
+```shell
+source venv/bin/activate
+```
 
-`venv/bin/activate`
+Then we install all the dependencies from the `requirements.txt` file into the virtual environment:
 
-Then we install all the dependencies from the requirements.txt file into the virtual environment:
-
-`pip3 install -r requirements.txt`
+```shell
+pip3 install -r requirements.txt
+```
 
 ### Migrations
+**Postgres must be enabled for migration**
+
 If all the previous steps are completed successfully, all that remains for you is to apply the migrations, for this we use this command:
 
-`python3 manage.py migrate`
+```shell
+python3 manage.py migrate
+```
 
 ### Launch of the project
-After successful configuration, all that remains is to write the following command to start the server:
+After successful configuration, you need to write the following command to run the django app:
 
-`python3 manage.py runserver`
+```shell
+python3 manage.py runserver localhost:8000
+```
+Then, in another terminal window, you need to run celery worker to send emails with order reports:
 
+```shell
+celery -A internet_shop_rest worker -l info
+```
+
+
+
+### Docker
+You can also run the project using docker. To do this, it is necessary that the environment variables containing the names of the postgres and redis hosts have the [`corresponding names`](#environment-variables).
+
+To run a project with docker you need to build it using the command:
+```shell
+docker-compose build
+```
+And after a successful build, raise your container:
+```shell
+docker-compose up
+```
+All this is to run postgres first, then redis, celery worker to send emails, migrations will be made and the django application will start
 ***
 ## Endpoints
 
