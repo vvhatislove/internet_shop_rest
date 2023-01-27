@@ -2,7 +2,6 @@ import os.path
 import re
 
 from django.db import models
-from django.urls import reverse
 from django.utils.text import slugify
 
 
